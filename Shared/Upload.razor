@@ -1,0 +1,53 @@
+﻿<div style="position: fixed;top: 50%;left: 50%; transform: translate(-50%, -50%);">
+<div>
+    <h1>SeeSharply</h1>
+    <div style="background-color: lightgray; border-width: 1px; border-style: solid; text-align: center;">
+        Select a .NET binary:
+        <div style="text-align:center" class="btn btn-success">
+            <h2 style="z-index: 9999">Upload</h2>
+            <InputFile style="display:block !important; z-index:0; opacity: 0 !important;" OnChange="HandleFileSelected" />
+        </div>
+    </div>
+</div>
+</div>
+
+@code {
+    [CascadingParameter] public AssemblyDefinition AssemblyDefinition { get; set; }
+    [CascadingParameter] public IFileListEntry FileEntry { get; set; }
+
+    #region AssemblyDefinition AssemblyDefinitionChanged
+
+    [Parameter]
+    public EventCallback<AssemblyDefinition> AssemblyDefinitionChanged { get; set; }
+
+    private async Task<AssemblyDefinition> ChangeAssemblyDefinitionNotifyAsync(AssemblyDefinition assemblyDefinition)
+    {
+        AssemblyDefinition = assemblyDefinition;
+        await AssemblyDefinitionChanged.InvokeAsync(assemblyDefinition);
+        return assemblyDefinition;
+    }
+
+    #endregion
+
+    #region IFileListEntry FileEntryChanged
+
+    [Parameter]
+    public EventCallback<IFileListEntry> FileEntryChanged { get; set; }
+
+    private async Task<IFileListEntry> ChangeFileEntryNotifyAsync(IFileListEntry fileEntry)
+    {
+        FileEntry = fileEntry;
+        await FileEntryChanged.InvokeAsync(fileEntry);
+        return fileEntry;
+    }
+
+    #endregion
+    async Task HandleFileSelected(IFileListEntry[] files)
+    {
+        if (files.Length <= 0 || files.Length > 1) return;
+        var cecil = files[0];
+        await ChangeFileEntryNotifyAsync(cecil);
+        var stream = await cecil.ReadAllAsync();
+        await ChangeAssemblyDefinitionNotifyAsync(AssemblyDefinition.ReadAssembly(stream));
+    }
+}

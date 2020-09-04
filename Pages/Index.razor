@@ -1,0 +1,21 @@
+﻿@page "/"
+
+<TreeView SelectedItemChanged="SelectedChanged">
+    <ModuleList ModuleDefinitions="AssemblyData.AssemblyDefinition.Modules"></ModuleList>
+</TreeView>
+
+@if (SelectedItem?.Value is TypeDefinition typeDefinition)
+{
+    <TypeDefinitionOptions Value="typeDefinition"></TypeDefinitionOptions>
+}
+
+@code {
+    [CascadingParameter] public IAssemblyData AssemblyData { get; set; }
+
+    public TreeItem SelectedItem { get; set; }
+    private void SelectedChanged(TreeItem arg)
+    {
+        SelectedItem?.UnselectCallback();
+        SelectedItem = arg;
+    }
+}

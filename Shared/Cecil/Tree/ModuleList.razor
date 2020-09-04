@@ -1,0 +1,15 @@
+﻿@using Mono.Cecil
+@using Mono.Collections.Generic
+@using SeeSharply.Shared.Tree
+
+@foreach (var module in ModuleDefinitions)
+{
+    <TreeItem Value="module" Expandable="RenderChildren" Text="@module.Name">
+        <TypeList TypeDefinitions="module.Types"></TypeList>
+    </TreeItem>
+}
+
+@code {
+    [Parameter] public Collection<ModuleDefinition> ModuleDefinitions { get; set; }
+    [Parameter] public bool RenderChildren { get; set; } = true;
+}

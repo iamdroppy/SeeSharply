@@ -1,0 +1,29 @@
+﻿<div id="tree">
+    <button class="btn btn-warning" @onclick="StateHasChanged">Refresh</button>
+    <ul class="ui-fancytree fancytree-container fancytree-ext-glyph" tabindex="0" role="tree" aria-multiselectable="true">
+        <CascadingValue Value="this">
+            @ChildContent
+        </CascadingValue>
+    </ul>
+</div>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    [Parameter] public TreeItem SelectedItem { get; set; }
+    [Parameter] public EventCallback<TreeItem> SelectedItemChanged { get; set; }
+
+    [Parameter]
+    public string IconOpen { get; set; } = "fa-chevron-down";
+
+    [Parameter]
+    public string IconClosed { get; set; } = "fa-chevron-right";
+
+    public async Task SelectItemAsync(TreeItem item)
+    {
+        var oldItem = SelectedItem;
+        SelectedItem = item;
+        await SelectedItemChanged.InvokeAsync(item);
+        oldItem?.UnselectCallback();
+    }
+}

@@ -1,0 +1,29 @@
+﻿<h2>Type</h2>
+<h3>@Value.FullName</h3>
+@if (_currentOption == null)
+{
+    <button @onclick="(() => _currentOption = OptionEnum.Rename)" class="btn btn-dark">Rename Type</button>
+}
+else
+{
+    <hr />
+    <button class="btn btn-info" style="display: inline" @onclick="CloseOptions">Back</button>
+
+    if (_currentOption == OptionEnum.Rename)
+    {
+        <h3 style="display: inline">Rename Type</h3>
+        <RenameTypeDefinition Value="Value" OnClose="CloseOptions"/>
+    }
+}
+@code {
+    [Parameter] public TypeDefinition Value { get; set; }
+
+    private enum OptionEnum
+    {
+        Rename
+    }
+
+    private OptionEnum? _currentOption;
+
+    private void CloseOptions() => _currentOption = null;
+}

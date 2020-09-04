@@ -1,0 +1,86 @@
+﻿@page "/obfuscation/name"
+@using System.Text
+
+<div class="form-group">
+    <label for="namespace">Namespace</label>
+    <select id="namespace" @bind="NamespaceObfuscation" class="form-control">
+        <option value="@NameObfuscationEnum.None">None</option>
+        <option value="@NameObfuscationEnum.Guid">Guid</option>
+        <option value="@NameObfuscationEnum.Invisible">Invisible</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="type">Type</label>
+    <select id="type" @bind="TypeObfuscation" class="form-control">
+        <option value="@NameObfuscationEnum.None">None</option>
+        <option value="@NameObfuscationEnum.Guid">Guid</option>
+        <option value="@NameObfuscationEnum.Invisible">Invisible</option>
+    </select>
+</div>
+
+
+<div class="form-group">
+    <label for="type">Method</label>
+    <select id="type" @bind="MethodObfuscation" class="form-control">
+        <option value="@NameObfuscationEnum.None">None</option>
+        <option value="@NameObfuscationEnum.Guid">Guid</option>
+        <option value="@NameObfuscationEnum.Invisible">Invisible</option>
+    </select>
+</div>
+
+<button class="btn btn-success" @onclick="SaveAsync"></button>
+
+@code {
+    [CascadingParameter] public IAssemblyData AssemblyData { get; set; }
+
+    private enum NameObfuscationEnum
+    {
+        None,
+        Guid,
+        Invisible
+    }
+
+    private NameObfuscationEnum NamespaceObfuscation { get; set; }
+    private NameObfuscationEnum TypeObfuscation { get; set; }
+    private NameObfuscationEnum MethodObfuscation { get; set; }
+
+    private async Task SaveAsync()
+    {
+        // todo: improve. made like this with enums and whatever.. just for testing
+        foreach (var module in AssemblyData.AssemblyDefinition.Modules)
+        {
+            if (ChangeName(module.Name, NamespaceObfuscation, out string newName)) module.Name = newName;
+
+            foreach (var type in module.Types)
+            {
+                if (ChangeName(type.Name, TypeObfuscation, out newName)) type.Name = newName;
+
+                foreach (var method in type.Methods)
+                {
+                    if (ChangeName(method.Name, MethodObfuscation, out newName)) method.Name = newName;
+                }
+            }
+        }
+    }
+
+    private int _counter = 0;
+
+    private bool ChangeName(string name, NameObfuscationEnum nameObfuscation, out string newName)
+    {
+        _counter++;
+        newName = name;
+        switch (nameObfuscation)
+        {
+            case NameObfuscationEnum.None:
+                return false;
+            case NameObfuscationEnum.Invisible:
+                newName = "a" + new string('‍', _counter) + "a"; // zwj
+                break;
+            case NameObfuscationEnum.Guid:
+                newName = Guid.NewGuid().ToString();
+                break;
+        }
+        return true;
+    }
+}

@@ -1,0 +1,70 @@
+﻿@inherits LayoutComponentBase
+@implements IAssemblyData
+@if (AssemblyDefinition == null || FileEntry == null)
+{
+    <div style="position: fixed;top: 50%;left: 50%; transform: translate(-50%, -50%);">
+        <div>
+            <h1>SeeSharply</h1>
+            <div style="background-color: lightgray; border-width: 1px; border-style: solid; text-align: center;">
+                <label for="upload" class="btn btn-success">Upload .NET binary</label>
+                <InputFile id="upload" style="display:none" OnChange="HandleFileSelected" />
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="sidebar">
+        <NavMenu/>
+    </div>
+
+    <div class="main">
+        <div class="content px-4">
+            <CascadingValue TValue="IAssemblyData" Value="this">
+                @Body
+            </CascadingValue>
+        </div>
+    </div>
+}
+@code{
+    [Parameter]
+    public AssemblyDefinition AssemblyDefinition { get; set; }
+
+    [Parameter]
+    public IFileListEntry FileEntry { get; set; }
+
+
+    public async Task FileEntryChanged(IFileListEntry fileEntry)
+    {
+        FileEntry = fileEntry;
+        StateHasChanged();
+    }
+
+    public async Task AssemblyDefinitionChanged(AssemblyDefinition assemblyDefinition)
+    {
+        AssemblyDefinition = assemblyDefinition;
+        StateHasChanged();
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+
+    async Task HandleFileSelected(IFileListEntry[] files)
+    {
+        if (files.Length <= 0 || files.Length > 1) return;
+        var cecil = files[0];
+        FileEntry = cecil;
+        await using var stream = await cecil.ReadAllAsync();
+        AssemblyDefinition = Mono.Cecil.AssemblyDefinition.ReadAssembly(stream);
+    }
+
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        AssemblyDefinition?.Dispose();
+    }
+
+}

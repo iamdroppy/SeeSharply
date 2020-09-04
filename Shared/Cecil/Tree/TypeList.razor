@@ -1,0 +1,11 @@
+﻿@foreach (var v in TypeDefinitions)
+{
+    <TreeItem Value="v" Expandable="RenderChildren" Text="@v.FullName">
+        <MethodList Value="v.Methods"></MethodList>
+    </TreeItem>
+}
+
+@code {
+    [Parameter] public ICollection<TypeDefinition> TypeDefinitions { get; set; }
+    [Parameter] public bool RenderChildren { get; set; } = true;
+}

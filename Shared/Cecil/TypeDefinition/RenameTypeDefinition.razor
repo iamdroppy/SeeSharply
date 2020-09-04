@@ -1,0 +1,31 @@
+﻿
+<h4>Rename Type Definition</h4>
+<i>It will rename all references.</i>
+
+<div class="form-group">
+    <label for="newvalue">New Type Name</label>
+    <input id="newvalue" type="text" class="form-control" @bind="NewName"/>
+</div>
+
+<button class="btn btn-success" @onclick="SaveAsync">Rename</button>
+<button class="btn btn-danger" @onclick="CloseAsync">Cancel</button>
+
+@code {
+    [Parameter] public TypeDefinition Value { get; set; }
+
+    [Parameter] public string NewName { get; set; }
+
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private Task SaveAsync()
+    {
+        Value.Name = NewName;
+        return CloseAsync();
+    }
+
+    private Task CloseAsync()
+    {
+        return OnClose.InvokeAsync(null);
+    }
+
+}
