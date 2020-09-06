@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using System.IO
+@inject IJSRuntime JsRuntime
 
 <TreeView SelectedItemChanged="SelectedChanged">
     <ModuleList ModuleDefinitions="AssemblyData.AssemblyDefinition.Modules"></ModuleList>
@@ -9,6 +11,9 @@
     <TypeDefinitionOptions Value="typeDefinition"></TypeDefinitionOptions>
 }
 
+<BR/>
+
+<button class="btn btn-info" @onclick="SaveFile">Download Assembly</button>
 @code {
     [CascadingParameter] public IAssemblyData AssemblyData { get; set; }
 
@@ -17,5 +22,13 @@
     {
         SelectedItem?.UnselectCallback();
         SelectedItem = arg;
+    }
+
+
+    public async Task SaveFile()
+    {
+        await using MemoryStream memoryStream = new MemoryStream();
+        AssemblyData.AssemblyDefinition.Write(memoryStream, new WriterParameters());
+        await FileUtil.SaveAs(JsRuntime, AssemblyData.FileEntry.Name, memoryStream.ToArray());
     }
 }
