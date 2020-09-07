@@ -1,0 +1,34 @@
+﻿@typeparam TData
+
+@if (Data == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!Data.Any())
+{
+    <p><em>No items found.</em></p>
+}
+else
+{
+    <div class="breaker" style="overflow-x: scroll;">
+        <table class="table">
+            <thead>
+            <tr>
+                @TableHead
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Data)
+            {
+                @TableRow(item)
+            }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    [Parameter] public RenderFragment TableHead { get; set; }
+    [Parameter] public RenderFragment<TData> TableRow { get; set; }
+    [Parameter] public IEnumerable<TData> Data { get; set; }
+}

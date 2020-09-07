@@ -225,3 +225,16 @@ ul.fancytree-container ul {
 ul.fancytree-container li {
     padding: 2px 0;
 }
+
+
+.breaker {
+     word-break: break-all
+ }
+
+.breaker table {
+    width: 100% !important;
+}
+
+.breaker thead {
+    word-break: keep-all
+}
