@@ -57,9 +57,9 @@ else
     async Task HandleFileSelected(IFileListEntry[] files)
     {
         if (files.Length <= 0 || files.Length > 1) return;
-        var cecil = files[0];
-        FileEntry = cecil;
-        await using var stream = await cecil.ReadAllAsync();
+        var il = files[0];
+        FileEntry = il;
+        var stream = await il.ReadAllAsync(); // cannot be disposed, otherwise you won't be able to save the assembly in the future.
         AssemblyDefinition = Mono.Cecil.AssemblyDefinition.ReadAssembly(stream);
     }
 

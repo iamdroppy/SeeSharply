@@ -11,7 +11,7 @@
     <TypeDefinitionOptions Value="typeDefinition"></TypeDefinitionOptions>
 }
 
-<BR/>
+<hr/>
 
 <button class="btn btn-info" @onclick="SaveFile">Download Assembly</button>
 @code {
@@ -24,11 +24,17 @@
         SelectedItem = arg;
     }
 
-
+    public byte[] AssemblyToByteArray(AssemblyDefinition def)
+    {
+        using (MemoryStream memoryStream = new MemoryStream())
+        {
+            def.Write(memoryStream);
+            return memoryStream.ToArray();
+        }
+    }
     public async Task SaveFile()
     {
-        await using MemoryStream memoryStream = new MemoryStream();
-        AssemblyData.AssemblyDefinition.Write(memoryStream, new WriterParameters());
-        await FileUtil.SaveAs(JsRuntime, AssemblyData.FileEntry.Name, memoryStream.ToArray());
+        var b = AssemblyToByteArray(AssemblyData.AssemblyDefinition);
+        await FileUtil.SaveAs(JsRuntime, AssemblyData.FileEntry.Name, b);
     }
 }
