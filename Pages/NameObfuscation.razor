@@ -58,7 +58,7 @@
 
                 foreach (var method in type.Methods)
                 {
-                    if (ChangeName(method.Name, MethodObfuscation, out newName)) method.Name = newName;
+                    if (!method.IsConstructor && ChangeName(method.Name, MethodObfuscation, out newName)) method.Name = newName;
                 }
             }
         }
