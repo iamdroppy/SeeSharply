@@ -3,6 +3,8 @@ SeeSharply is a frontend for Mono.Cecil using Blazor WebAssembly targetting .NET
 
 It is currently on alpha, and should remain like that for a while.
 
+Demo can be found at https://iamdroppy.github.io/SeeSharply-build/ although it is not keeping up-to-date with `master` at the minute.
+
 ## Features
 
 ### Basic functionality
