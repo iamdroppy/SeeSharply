@@ -1,0 +1,142 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Lucca\\Documents\\GitHub\\Cross-Check\\XStock\\SeeSharply\\Utils\\Blazor.Diagrams\\Blazor.Diagrams.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Lucca\\Documents\\GitHub\\Cross-Check\\XStock\\SeeSharply\\Utils\\Blazor.Diagrams.Core\\Blazor.Diagrams.Core.csproj": {
+      "version": "0.7.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Lucca\\Documents\\GitHub\\Cross-Check\\XStock\\SeeSharply\\Utils\\Blazor.Diagrams.Core\\Blazor.Diagrams.Core.csproj",
+        "projectName": "Z.Blazor.Diagrams.Core",
+        "projectPath": "C:\\Users\\Lucca\\Documents\\GitHub\\Cross-Check\\XStock\\SeeSharply\\Utils\\Blazor.Diagrams.Core\\Blazor.Diagrams.Core.csproj",
+        "packagesPath": "C:\\Users\\Lucca\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Lucca\\Documents\\GitHub\\Cross-Check\\XStock\\SeeSharply\\Utils\\Blazor.Diagrams.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Lucca\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://dotnet.myget.org/F/roslyn/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Components.Web": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "c:\\program files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Lucca\\Documents\\GitHub\\Cross-Check\\XStock\\SeeSharply\\Utils\\Blazor.Diagrams\\Blazor.Diagrams.csproj": {
+      "version": "0.7.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Lucca\\Documents\\GitHub\\Cross-Check\\XStock\\SeeSharply\\Utils\\Blazor.Diagrams\\Blazor.Diagrams.csproj",
+        "projectName": "Z.Blazor.Diagrams",
+        "projectPath": "C:\\Users\\Lucca\\Documents\\GitHub\\Cross-Check\\XStock\\SeeSharply\\Utils\\Blazor.Diagrams\\Blazor.Diagrams.csproj",
+        "packagesPath": "C:\\Users\\Lucca\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Lucca\\Documents\\GitHub\\Cross-Check\\XStock\\SeeSharply\\Utils\\Blazor.Diagrams\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Lucca\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://dotnet.myget.org/F/roslyn/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "projectReferences": {
+              "C:\\Users\\Lucca\\Documents\\GitHub\\Cross-Check\\XStock\\SeeSharply\\Utils\\Blazor.Diagrams.Core\\Blazor.Diagrams.Core.csproj": {
+                "projectPath": "C:\\Users\\Lucca\\Documents\\GitHub\\Cross-Check\\XStock\\SeeSharply\\Utils\\Blazor.Diagrams.Core\\Blazor.Diagrams.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Components": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
+            "Microsoft.AspNetCore.Components.Web": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "c:\\program files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

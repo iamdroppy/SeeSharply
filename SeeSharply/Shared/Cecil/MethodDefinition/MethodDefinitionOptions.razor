@@ -1,0 +1,15 @@
+﻿@inject NavigationManager _navigationManager;
+<h2>Method</h2>
+<h3>@Value.FullName</h3>
+
+<button @onclick="NavigateToIlExplorer" class="btn btn-dark">Browse IL</button>
+
+@code {
+    [Parameter] public MethodDefinition Value { get; set; }
+
+    private void NavigateToIlExplorer()
+    {
+        _navigationManager.NavigateTo("ilbrowser/"  + Value.GetHashCode().ToString());
+    }
+
+}

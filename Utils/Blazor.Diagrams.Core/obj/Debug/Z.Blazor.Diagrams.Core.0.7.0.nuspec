@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Z.Blazor.Diagrams.Core</id>
+    <version>0.7.0</version>
+    <authors>zHaytam</authors>
+    <owners>zHaytam</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <description>A fully customizable and extensible all-purpose diagrams library for Blazor</description>
+    <tags>blazor diagrams diagramming svg drag</tags>
+    <repository url="https://github.com/zHaytam/Blazor.Diagrams" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.1">
+        <dependency id="Microsoft.AspNetCore.Components.Web" version="3.1.4" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams.Core\bin\Debug\netstandard2.1\Blazor.Diagrams.Core.dll" target="lib\netstandard2.1\Blazor.Diagrams.Core.dll" />
+  </files>
+</package>

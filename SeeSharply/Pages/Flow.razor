@@ -1,0 +1,98 @@
+﻿@page "/flow"
+@using System.Net.NetworkInformation
+<div style="position: absolute; width: 100% !important; min-height: 91% !important; height: 91%; ">
+    <CascadingValue Name="DiagramManager" Value="DiagramManager">
+        <DiagramCanvas></DiagramCanvas>
+    </CascadingValue>
+</div>
+@code
+{
+    [CascadingParameter] public IAssemblyData AssemblyData { get; set; }
+    private DiagramManager DiagramManager { get; set; }
+    private Dictionary<AssemblyDefinition, NodeModel> _assemblyToNode { get; } = new Dictionary<AssemblyDefinition, NodeModel>();
+    private Dictionary<ModuleDefinition, NodeModel> _moduleToNode { get; } = new Dictionary<ModuleDefinition, NodeModel>();
+    private Dictionary<TypeDefinition, NodeModel> _typeToNode { get; } = new Dictionary<TypeDefinition, NodeModel>();
+    private Dictionary<MethodDefinition, NodeModel> _methodToNode { get; } = new Dictionary<MethodDefinition, NodeModel>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        DiagramManager = new DiagramManager();
+        Setup();
+    }
+
+    private void Setup()
+    {
+        var assemblyNode = AddAssemblyNode(AssemblyData.AssemblyDefinition);
+        foreach (var v in AssemblyData.AssemblyDefinition.Modules)
+        {
+            var moduleNode = AddModuleNode(v, assemblyNode);
+            foreach (var type in v.Types)
+            {
+                var typeNode = AddTypeNode(type, moduleNode);
+                foreach (var method in type.Methods)
+                {
+                    var methodNode = AddMethodNode(method, typeNode);
+                }
+            }
+        }
+
+        DiagramManager.AddNodes(AllNodes());
+    }
+
+    private NodeModel[] AllNodes()
+    {
+        List<NodeModel> allNodes = new List<NodeModel>();
+        allNodes.AddRange(_assemblyToNode.Select(s => s.Value));
+        allNodes.AddRange(_moduleToNode.Select(s => s.Value));
+        allNodes.AddRange(_typeToNode.Select(s => s.Value));
+        allNodes.AddRange(_methodToNode.Select(s => s.Value));
+        return allNodes.ToArray();
+    }
+
+    private NodeModel AddAssemblyNode(AssemblyDefinition assembly)
+    {
+        var node = NewNode(_assemblyToNode.Count() * 250, 5, PortAlignment.BOTTOM);
+        node.SetTitle(assembly.FullName);
+        _assemblyToNode.Add(assembly, node);
+        return node;
+    }
+
+    private NodeModel AddModuleNode(ModuleDefinition module, NodeModel parentNode)
+    {
+        var node = NewNode(_moduleToNode.Count() * 250, 250, PortAlignment.BOTTOM, PortAlignment.TOP);
+        node.SetTitle(module.Name);
+        _moduleToNode.Add(module, node);
+
+        DiagramManager.AddLink(node.GetPort(PortAlignment.TOP), parentNode.GetPort(PortAlignment.BOTTOM));
+        return node;
+    }
+
+    private NodeModel AddTypeNode(TypeDefinition type, NodeModel parentNode)
+    {
+        var node = NewNode(_typeToNode.Count() * 250, 500, PortAlignment.BOTTOM, PortAlignment.TOP);
+        node.SetTitle(type.Name);
+        _typeToNode.Add(type, node);
+
+        DiagramManager.AddLink(node.GetPort(PortAlignment.TOP), parentNode.GetPort(PortAlignment.BOTTOM));
+        return node;
+    }
+
+    private NodeModel AddMethodNode(MethodDefinition method, NodeModel parentNode)
+    {
+        var node = NewNode(_methodToNode.Count() * 250, 750, PortAlignment.BOTTOM, PortAlignment.TOP, PortAlignment.LEFT, PortAlignment.RIGHT);
+        node.SetTitle(method.Name);
+        _methodToNode.Add(method, node);
+
+        DiagramManager.AddLink(node.GetPort(PortAlignment.TOP), parentNode.GetPort(PortAlignment.BOTTOM));
+        return node;
+    }
+    private NodeModel NewNode(double x, double y, params PortAlignment[] alignments)
+    {
+        var node = new NodeModel(new Point(x, y));
+        foreach (var v in alignments)
+            node.AddPort(v);
+        return node;
+    }
+}

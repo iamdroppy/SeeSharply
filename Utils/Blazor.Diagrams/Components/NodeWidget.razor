@@ -1,0 +1,16 @@
+﻿@inherits NodeWidgetBaseComponent<NodeModel>
+
+<div class="node default @(Node.Group != null ? "grouped" : "") @(Node.Selected ? "selected" : "")"
+     @onmousedown="OnMouseDown"
+     @onmousedown:stopPropagation
+     @ref="element"
+     style="top: @(Node.Position.Y.ToInvariantString())px;
+            left: @(Node.Position.X.ToInvariantString())px">
+    <div class="node-content">
+        @Node.Title
+        @foreach (var port in Node.Ports)
+        {
+            <PortWidget Port="port" />
+        }
+    </div>
+</div>

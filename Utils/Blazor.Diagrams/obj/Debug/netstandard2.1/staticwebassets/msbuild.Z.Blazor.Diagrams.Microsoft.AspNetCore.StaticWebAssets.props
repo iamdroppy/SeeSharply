@@ -1,0 +1,11 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAsset Include="$(MSBuildThisFileDirectory)..\staticwebassets\**">
+      <SourceType>Package</SourceType>
+      <SourceId>Z.Blazor.Diagrams</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Z.Blazor.Diagrams</BasePath>
+      <RelativePath>%(RecursiveDir)%(FileName)%(Extension)</RelativePath>
+    </StaticWebAsset>
+  </ItemGroup>
+</Project>

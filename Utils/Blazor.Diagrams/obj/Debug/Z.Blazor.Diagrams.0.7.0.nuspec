@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Z.Blazor.Diagrams</id>
+    <version>0.7.0</version>
+    <authors>zHaytam</authors>
+    <owners>zHaytam</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://blazor-diagrams.zhaytam.com/</projectUrl>
+    <description>A fully customizable and extensible all-purpose diagrams library for Blazor</description>
+    <tags>blazor diagrams diagramming svg drag</tags>
+    <repository url="https://github.com/zHaytam/Blazor.Diagrams" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.1">
+        <dependency id="Z.Blazor.Diagrams.Core" version="0.7.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.Components" version="3.1.4" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.Components.Web" version="3.1.4" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams\bin\Debug\netstandard2.1\Blazor.Diagrams.dll" target="lib\netstandard2.1\Blazor.Diagrams.dll" />
+    <file src="C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams\obj\Debug\netstandard2.1\staticwebassets\msbuild.Z.Blazor.Diagrams.Microsoft.AspNetCore.StaticWebAssets.props" target="build\Microsoft.AspNetCore.StaticWebAssets.props" />
+    <file src="C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams\obj\Debug\netstandard2.1\staticwebassets\msbuild.build.Z.Blazor.Diagrams.props" target="build\Z.Blazor.Diagrams.props" />
+    <file src="C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams\obj\Debug\netstandard2.1\staticwebassets\msbuild.buildMultiTargeting.Z.Blazor.Diagrams.props" target="buildMultiTargeting\Z.Blazor.Diagrams.props" />
+    <file src="C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams\obj\Debug\netstandard2.1\staticwebassets\msbuild.buildTransitive.Z.Blazor.Diagrams.props" target="buildTransitive\Z.Blazor.Diagrams.props" />
+    <file src="C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams\wwwroot\default.styles.css" target="staticwebassets\default.styles.css" />
+    <file src="C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams\wwwroot\script.js" target="staticwebassets\script.js" />
+    <file src="C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams\wwwroot\script.min.js" target="staticwebassets\script.min.js" />
+    <file src="C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams\wwwroot\style.css" target="staticwebassets\style.css" />
+  </files>
+</package>

@@ -1,0 +1,44 @@
+﻿@page "/"
+@using System.IO
+@inject IJSRuntime JsRuntime
+
+<TreeView SelectedItemChanged="SelectedChanged">
+    <ModuleList ModuleDefinitions="AssemblyData.AssemblyDefinition.Modules"></ModuleList>
+</TreeView>
+
+@if (SelectedItem?.Value is TypeDefinition typeDefinition)
+{
+    <TypeDefinitionOptions Value="typeDefinition"></TypeDefinitionOptions>
+}
+
+@if (SelectedItem?.Value is MethodDefinition methodDefinition)
+{
+    <MethodDefinitionOptions Value="methodDefinition"></MethodDefinitionOptions>
+}
+<hr />
+
+<button class="btn btn-info" @onclick="SaveFile">Download Assembly</button>
+@code {
+    [CascadingParameter] public IAssemblyData AssemblyData { get; set; }
+
+    public TreeItem SelectedItem { get; set; }
+    private void SelectedChanged(TreeItem arg)
+    {
+        SelectedItem?.UnselectCallback();
+        SelectedItem = arg;
+    }
+
+    public byte[] AssemblyToByteArray(AssemblyDefinition def)
+    {
+        using (MemoryStream memoryStream = new MemoryStream())
+        {
+            def.Write(memoryStream);
+            return memoryStream.ToArray();
+        }
+    }
+    public async Task SaveFile()
+    {
+        var b = AssemblyToByteArray(AssemblyData.AssemblyDefinition);
+        await FileUtil.SaveAs(JsRuntime, AssemblyData.FileEntry.Name, b);
+    }
+}

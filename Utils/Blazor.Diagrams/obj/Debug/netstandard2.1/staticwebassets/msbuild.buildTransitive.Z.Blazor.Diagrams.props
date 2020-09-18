@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Z.Blazor.Diagrams.props" />
+</Project>

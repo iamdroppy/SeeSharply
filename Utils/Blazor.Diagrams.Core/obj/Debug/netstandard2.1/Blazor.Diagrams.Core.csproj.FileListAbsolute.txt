@@ -1,0 +1,9 @@
+C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams.Core\bin\Debug\netstandard2.1\Blazor.Diagrams.Core.deps.json
+C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams.Core\bin\Debug\netstandard2.1\Blazor.Diagrams.Core.dll
+C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams.Core\bin\Debug\netstandard2.1\Blazor.Diagrams.Core.pdb
+C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams.Core\obj\Debug\netstandard2.1\Blazor.Diagrams.Core.csprojAssemblyReference.cache
+C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams.Core\obj\Debug\netstandard2.1\Blazor.Diagrams.Core.AssemblyInfoInputs.cache
+C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams.Core\obj\Debug\netstandard2.1\Blazor.Diagrams.Core.AssemblyInfo.cs
+C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams.Core\obj\Debug\netstandard2.1\Blazor.Diagrams.Core.csproj.CoreCompileInputs.cache
+C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams.Core\obj\Debug\netstandard2.1\Blazor.Diagrams.Core.dll
+C:\Users\Lucca\Documents\GitHub\Cross-Check\XStock\SeeSharply\Utils\Blazor.Diagrams.Core\obj\Debug\netstandard2.1\Blazor.Diagrams.Core.pdb

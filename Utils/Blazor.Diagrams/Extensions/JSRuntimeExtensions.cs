@@ -1,0 +1,31 @@
+﻿using Blazor.Diagrams.Core.Models;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.Threading.Tasks;
+
+namespace Blazor.Diagrams.Extensions
+{
+    public static class JSRuntimeExtensions
+    {
+        public static async Task<double[]> GetOffsetWithSize(this IJSRuntime jsRuntime, ElementReference element)
+        {
+            return await jsRuntime.InvokeAsync<double[]>("ZBlazorDiagrams.getOffsetWithSize", element);
+        }
+
+        public static async Task<Rectangle> GetBoundingClientRect(this IJSRuntime jsRuntime, ElementReference element)
+        {
+            return await jsRuntime.InvokeAsync<Rectangle>("ZBlazorDiagrams.getBoundingClientRect", element);
+        }
+
+        public static async Task ObserveResizes<T>(this IJSRuntime jsRuntime, ElementReference element, 
+            DotNetObjectReference<T> reference) where T : class
+        {
+            await jsRuntime.InvokeVoidAsync("ZBlazorDiagrams.observe", element, reference, element.Id);
+        }
+
+        public static async Task UnobserveResizes(this IJSRuntime jsRuntime, ElementReference element)
+        {
+            await jsRuntime.InvokeVoidAsync("ZBlazorDiagrams.unobserve", element, element.Id);
+        }
+    }
+}

@@ -1,0 +1,162 @@
+﻿@page "/ilbrowser/{MethodHashCode}"
+@using System.Text
+@using Mono.Cecil.Cil
+@using System.Reflection
+@using System
+
+@if (!(LoadingState is { } loadingState))
+{
+    <pre><em>Could not find method with Hash Code @MethodHashCode</em></pre>
+}
+else if (!loadingState)
+{
+    <pre><em>Could not find method with Hash Code @MethodHashCode</em></pre>
+}
+else
+{
+    <TableView TData="InstructionWrapper" Data="InstructionsWrapped">
+        <TableHead>
+            <th>OpCode</th>
+            <th>Operand</th>
+            <th>Operand Type</th>
+            
+            <th>Options</th>
+        </TableHead>
+        <TableRow Context="_ctx">
+            <tr style="@_ctx.StateStyle">
+                <td>
+                    <select disabled="@_ctx.LockOpcodeModification" @bind="_ctx.CurrentOpcode">
+                        @foreach (var opCode in _codeToField.Select(s => s.Key))
+                        {
+                            <option value="@opCode">@opCode.ToString()</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    @if (_ctx.Instruction.Operand?.GetType() == typeof(MethodReference))
+                    {
+                        @(_ctx.Instruction.Operand?.ToString() ?? "")
+                        <p><a href="#">Change Method Reference</a></p>
+                    }
+                    else
+                    {
+                        @(_ctx.Instruction.Operand?.ToString() ?? "")
+                    }
+                </td>
+                <td>@(_ctx.Instruction.Operand?.GetType()?.Name ?? "")</td>
+                <td>
+                    @if (_ctx.IsDirty)
+                    {
+                        <button class="btn btn-success" @onclick="_ctx.Save">Save</button>
+                        <button class="btn btn-danger" @onclick="@_ctx.Revert">Revert</button>
+                    }
+
+                </td>
+            </tr>
+        </TableRow>
+    </TableView>
+}
+@code {
+    private InstructionWrapper _ctx;
+
+    private class InstructionWrapper
+    {
+        public Instruction Instruction { get; }
+
+        public bool LockOpcodeModification = false;
+
+        private Code _currentOpcode;
+        public Code CurrentOpcode
+        {
+            get => _currentOpcode;
+            set
+            {
+                if (_currentOpcode != value)
+                {
+                    _currentOpcode = value;
+                    IsDirty = true;
+                }
+            }
+        }
+
+        private Guid _currentOperand;
+        public Guid CurrentOperand
+        {
+            get => _currentOperand;
+            set
+            {
+                if (_currentOperand != value)
+                {
+                    _currentOperand = value;
+                    IsDirty = true;
+                }
+            }
+        }
+
+        public bool IsDirty { get; set; }
+        public InstructionWrapper(Instruction instruction)
+        {
+            Instruction = instruction;
+            _currentOpcode = Instruction.OpCode.Code;
+            if (Instruction.Operand?.GetType() == typeof(MethodReference))
+                LockOpcodeModification = true;
+            if (Instruction.Operand != null)
+            {
+                var val = AllMethodDefinitions.FirstOrDefault(s => s.Value.GetType() == instruction?.Operand?.GetType());
+                CurrentOperand = val.Key;
+            }
+        }
+
+        public string StateStyle
+        {
+            get
+            {
+                if (IsDirty) return "background-color: gray;";
+                return string.Empty;
+            }
+        }
+
+        public void Save()
+        {
+            Instruction.OpCode = _codeToField[CurrentOpcode];
+            if (CurrentOperand is {} g)
+                Instruction.Operand = AllMethodDefinitions[g];
+            IsDirty = false;
+        }
+
+        public void Revert()
+        {
+            CurrentOpcode = Instruction.OpCode.Code;
+            if (CurrentOperand is { } g)
+                CurrentOperand = AllMethodDefinitions.FirstOrDefault(s => s.Value.GetType() == Instruction.Operand.GetType()).Key;
+            IsDirty = false;
+        }
+    }
+
+    [CascadingParameter] public IAssemblyData AssemblyData { get; set; }
+    [Parameter] public string MethodHashCode { get; set; }
+
+    private static Dictionary<Code, OpCode> _codeToField;
+    private MethodDefinition MethodDefinition { get; set; }
+    private IEnumerable<InstructionWrapper> InstructionsWrapped { get; set; }
+    private static Dictionary<Guid, MethodDefinition> AllMethodDefinitions { get; set; }
+    private bool? LoadingState = null;
+
+    /// <inheritdoc />
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        // gets all instructions from Mono.Cecil
+        _codeToField ??= typeof(OpCodes).GetFields().ToDictionary(
+            s => Enum.TryParse(s.Name, out Code code) ? code : Code.Nop,
+            s => (OpCode)s.GetValue(null)
+            );
+
+
+        MethodDefinition = AssemblyData.AssemblyDefinition.Modules.SelectMany(s => s.Types.SelectMany(y => y.Methods.Where(x => x.GetHashCode().ToString() == MethodHashCode))).FirstOrDefault();
+        AllMethodDefinitions = MethodDefinition.Module.Types.SelectMany(s => s.Methods).ToDictionary(s=>Guid.NewGuid(), s=>s);
+        InstructionsWrapped = MethodDefinition.Body.Instructions.Select(s => new InstructionWrapper(s));
+        LoadingState = MethodDefinition != null;
+    }
+
+}

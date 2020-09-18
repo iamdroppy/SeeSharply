@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Z.Blazor.Diagrams.props" />
+</Project>
